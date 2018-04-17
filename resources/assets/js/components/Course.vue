@@ -33,7 +33,7 @@
 <script>
 	export default {
 		mounted() {
-			console.log('Assistant mounted.');
+			console.log('Course mounted.');
 		}
 	}
 </script>
