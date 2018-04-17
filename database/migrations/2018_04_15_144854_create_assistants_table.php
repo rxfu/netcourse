@@ -16,7 +16,7 @@ class CreateAssistantsTable extends Migration {
 			$table->increments('id');
 			$table->string('card_id', 20);
 			$table->string('name', 50);
-			$table->integer('department_id');
+			$table->integer('department_id')->unsigned();
 			$table->string('major', 100)->nullable();
 			$table->string('phone', 20);
 			$table->timestamps();

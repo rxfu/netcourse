@@ -17,11 +17,11 @@ class CreateCoursesTable extends Migration {
 			$table->string('name', 50);
 			$table->string('class', 20);
 			$table->string('campus', 10);
-			$table->boolean('is_used')->default('false');
-			$table->integer('assistant_id');
+			$table->boolean('is_used')->default(false);
+			$table->integer('assistant_id')->unsigned();
 			$table->timestamps();
 
-			$table->foreign('assistants_id')->references('id')->on('assistants')->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('assistant_id')->references('id')->on('assistants')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 
