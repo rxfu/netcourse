@@ -13,10 +13,9 @@ class CreateDepartmentsTable extends Migration {
 	 */
 	public function up() {
 		Schema::create('departments', function (Blueprint $table) {
-			$table->string('id');
+			$table->increment('id');
 			$table->string('name', 50);
-
-			$table->primary('id');
+			$table->boolean('is_college')->default(true);
 		});
 	}
 
