@@ -21,7 +21,9 @@
 					<div class="form-group row">
 						<label for="department_id" class="col-md-2 col-form-label text-right">学院</label>
 						<div class="col-md-10">
-							<input type="text" id="department_id" name="department_id" class="form-control" placeholder="学院" required>
+							<select name="department_id" class="form-control" required>
+								<option value="01">文学院</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -46,3 +48,11 @@
 		</div>
 	</div>
 </template>
+
+<script>
+	export default {
+		mounted() {
+			console.log('Assistant mounted.');
+		}
+	}
+</script>
