@@ -49951,7 +49951,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Assistant.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Assistant.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -49960,9 +49960,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-a6bad892", Component.options)
+    hotAPI.createRecord("data-v-05f48e77", Component.options)
   } else {
-    hotAPI.reload("data-v-a6bad892", Component.options)
+    hotAPI.reload("data-v-05f48e77", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -50029,10 +50029,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	mounted: function mounted() {
 		console.log('Assistant mounted.');
+	},
+	data: function data() {
+		return {
+			departments: []
+		};
+	},
+
+
+	created: function created() {
+		this.fetchItems();
+	},
+
+	methods: {
+		fetchItems: function fetchItems() {
+			var _this = this;
+
+			var uri = 'api/departments';
+			axios.get(uri).then(function (response) {
+				_this.departments = response.data;
+			}).catch(function (response) {
+				console.log(response.message);
+				alert('Error: ' + response.message);
+			});
+		}
 	}
 });
 
@@ -50044,152 +50070,190 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group row" }, [
+            _c(
+              "label",
+              {
+                staticClass: "col-md-2 col-form-label text-right",
+                attrs: { for: "department_id" }
+              },
+              [_vm._v("学院")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-10" }, [
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  attrs: { name: "department_id", required: "" }
+                },
+                _vm._l(_vm.departments, function(department) {
+                  return _c("option", { domProps: { value: department.id } }, [
+                    _vm._v(
+                      "\n\t\t\t\t\t\t\t\t" +
+                        _vm._s(department.name) +
+                        "\n\t\t\t\t\t\t\t"
+                    )
+                  ])
+                })
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm._m(5)
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-header text-center" }, [
-            _c("h3", { staticClass: "md-3 font-weight-normal" }, [
-              _vm._v("请助教输入相关信息")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label text-right",
-                  attrs: { for: "card_id" }
-                },
-                [_vm._v("工号")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-10" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    id: "card_id",
-                    name: "card_id",
-                    placeholder: "工号",
-                    required: "",
-                    autofocus: ""
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label text-right",
-                  attrs: { for: "name" }
-                },
-                [_vm._v("姓名")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-10" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    id: "name",
-                    name: "name",
-                    placeholder: "姓名",
-                    required: ""
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label text-right",
-                  attrs: { for: "department_id" }
-                },
-                [_vm._v("学院")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-10" }, [
-                _c(
-                  "select",
-                  {
-                    staticClass: "form-control",
-                    attrs: { name: "department_id", required: "" }
-                  },
-                  [_c("option", { attrs: { value: "01" } }, [_vm._v("文学院")])]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label text-right",
-                  attrs: { for: "major" }
-                },
-                [_vm._v("专业")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-10" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    id: "major",
-                    name: "major",
-                    placeholder: "专业"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "col-md-2 col-form-label text-right",
-                  attrs: { for: "phone" }
-                },
-                [_vm._v("联系电话")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-10" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    id: "phone",
-                    name: "phone",
-                    placeholder: "联系电话",
-                    required: ""
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("div", { staticClass: "col-md-10 offset-md-2" }, [
-                _c(
-                  "button",
-                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-                  [_vm._v("申请")]
-                )
-              ])
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "card-header text-center" }, [
+      _c("h3", { staticClass: "md-3 font-weight-normal" }, [
+        _vm._v("请助教输入相关信息")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-2 col-form-label text-right",
+          attrs: { for: "card_id" }
+        },
+        [_vm._v("工号")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-10" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "card_id",
+            name: "card_id",
+            placeholder: "工号",
+            required: "",
+            autofocus: ""
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-2 col-form-label text-right",
+          attrs: { for: "name" }
+        },
+        [_vm._v("姓名")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-10" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "name",
+            name: "name",
+            placeholder: "姓名",
+            required: ""
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-2 col-form-label text-right",
+          attrs: { for: "major" }
+        },
+        [_vm._v("专业")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-10" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "major",
+            name: "major",
+            placeholder: "专业"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-2 col-form-label text-right",
+          attrs: { for: "phone" }
+        },
+        [_vm._v("联系电话")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-10" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "phone",
+            name: "phone",
+            placeholder: "联系电话",
+            required: ""
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group row" }, [
+      _c("div", { staticClass: "col-md-10 offset-md-2" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("申请")]
+        )
       ])
     ])
   }
@@ -50199,7 +50263,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-a6bad892", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-05f48e77", module.exports)
   }
 }
 
@@ -50229,7 +50293,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Course.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Course.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -50238,9 +50302,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3baaef92", Component.options)
+    hotAPI.createRecord("data-v-3a58ecd2", Component.options)
   } else {
-    hotAPI.reload("data-v-3baaef92", Component.options)
+    hotAPI.reload("data-v-3a58ecd2", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -50356,7 +50420,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3baaef92", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-3a58ecd2", module.exports)
   }
 }
 
@@ -50386,7 +50450,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Success.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Success.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -50395,9 +50459,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-14a4bac8", Component.options)
+    hotAPI.createRecord("data-v-66816548", Component.options)
   } else {
-    hotAPI.reload("data-v-14a4bac8", Component.options)
+    hotAPI.reload("data-v-66816548", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -50453,7 +50517,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-14a4bac8", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-66816548", module.exports)
   }
 }
 
@@ -50483,7 +50547,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/Fail.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Fail.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -50492,9 +50556,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-11b1b8d5", Component.options)
+    hotAPI.createRecord("data-v-023e0615", Component.options)
   } else {
-    hotAPI.reload("data-v-11b1b8d5", Component.options)
+    hotAPI.reload("data-v-023e0615", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -50550,7 +50614,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-11b1b8d5", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-023e0615", module.exports)
   }
 }
 
@@ -50580,7 +50644,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/pages/App.vue"
+Component.options.__file = "resources\\assets\\js\\pages\\App.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -50589,9 +50653,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-78e75c74", Component.options)
+    hotAPI.createRecord("data-v-2cca580c", Component.options)
   } else {
-    hotAPI.reload("data-v-78e75c74", Component.options)
+    hotAPI.reload("data-v-2cca580c", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -50652,7 +50716,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-78e75c74", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-2cca580c", module.exports)
   }
 }
 

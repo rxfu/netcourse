@@ -22,7 +22,9 @@
 						<label for="department_id" class="col-md-2 col-form-label text-right">学院</label>
 						<div class="col-md-10">
 							<select name="department_id" class="form-control" required>
-								<option value="01">文学院</option>
+								<option v-for="department in departments" v-bind:value="department.id">
+									{{ department.name }}
+								</option>
 							</select>
 						</div>
 					</div>
@@ -53,6 +55,28 @@
 	export default {
 		mounted() {
 			console.log('Assistant mounted.');
+		},
+
+		data() {
+			return {
+				departments: []
+			}
+		},
+
+		created: function() {
+			this.fetchItems();
+		},
+
+		methods: {
+			fetchItems() {
+				let uri = 'api/departments';
+				axios.get(uri).then((response) => {
+					this.departments = response.data;
+				}).catch((response) => {
+					console.log(response.message);
+					alert('Error: ' + response.message);
+				});
+			}
 		}
 	}
 </script>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\Department;
+
 class HomeController extends Controller {
 
 	public function getDepartments() {

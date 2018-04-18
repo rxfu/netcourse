@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 	return $request->user();
 });
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['guest:api']], function () {
 	Route::get('/departments', 'HomeController@getDepartments');
 	Route::get('/courses', 'HomeController@getCourses');
 	Route::post('/apply', 'HomeController@store');
