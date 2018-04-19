@@ -42,7 +42,21 @@ class HomeController extends Controller {
 		return abort(500);
 	}
 
-	public function postUpdateCourse(Request $request) {
+	public function postUpdateCourses(Request $request) {
+		if ($request->ajax() && $request->isMethod('post')) {
+			foreach ($request->all() as $id) {
+				$course          = Course::findOrFail($id);
+				$course->is_used = true;
+				$course->save();
+			}
+
+			if (true) {
+				return response()->json(['message' => 'Add successfully!']);
+			} else {
+				return response()->json(['message' => 'Add failed!']);
+			}
+		}
+
 		return abort(500);
 	}
 }

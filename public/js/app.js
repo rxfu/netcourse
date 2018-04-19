@@ -50465,10 +50465,61 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	mounted: function mounted() {
 		console.log('Course mounted.');
+	},
+	data: function data() {
+		return {
+			ids: [],
+			courses: []
+		};
+	},
+
+
+	created: function created() {
+		this.fetchItems();
+	},
+
+	methods: {
+		fetchItems: function fetchItems() {
+			var _this = this;
+
+			var uri = 'api/courses';
+			axios.get(uri).then(function (response) {
+				_this.courses = response.data;
+			}).catch(function (response) {
+				console.log(response.message);
+				alert('Error: ' + response.message);
+			});
+		},
+
+		updateCourse: function updateCourse() {
+			var _this2 = this;
+
+			var uri = 'api/update';
+			axios.post(uri, this.ids).then(function (response) {
+				console.log(response);
+				_this2.$router.push('success');
+			}).catch(function (response) {
+				console.log(response.message);
+				alert('Error: ' + response.message);
+			});
+		}
 	}
 });
 
@@ -50480,49 +50531,135 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.updateCourse($event)
+                }
+              }
+            },
+            [
+              _c("table", { staticClass: "table table-striped" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.courses, function(course) {
+                    return _c("tr", [
+                      _c("td", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.ids,
+                              expression: "ids"
+                            }
+                          ],
+                          attrs: { type: "checkbox" },
+                          domProps: {
+                            value: course.id,
+                            checked: Array.isArray(_vm.ids)
+                              ? _vm._i(_vm.ids, course.id) > -1
+                              : _vm.ids
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.ids,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = course.id,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 && (_vm.ids = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.ids = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.ids = $$c
+                              }
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_c("i", [_vm._v(_vm._s(course.id))])]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(course.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(course.class))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(course.campus))])
+                    ])
+                  })
+                ),
+                _vm._v(" "),
+                _vm._m(2)
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card card-default" }, [
-          _c("div", { staticClass: "card-header text-center" }, [
-            _c("h3", { staticClass: "md-3 font-weight-normal" }, [
-              _vm._v("可申请课程信息")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", { staticClass: "table table-striped" }, [
-              _c("thead", [
-                _c("tr", [
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("操作")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("课程名称")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("班级名称")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [_vm._v("所在校区")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tbody", [
-                _c("tr", [
-                  _c("td"),
-                  _vm._v(" "),
-                  _c("td"),
-                  _vm._v(" "),
-                  _c("td"),
-                  _vm._v(" "),
-                  _c("td")
-                ])
-              ])
-            ])
-          ])
+    return _c("div", { staticClass: "card-header text-center" }, [
+      _c("h3", { staticClass: "md-3 font-weight-normal" }, [
+        _vm._v("可申请课程信息")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("操作")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("课程名称")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("班级名称")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("所在校区")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tfoot", [
+      _c("tr", [
+        _c("td", { attrs: { colspan: "5" } }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-block btn-primary",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("提交")]
+          )
         ])
       ])
     ])
