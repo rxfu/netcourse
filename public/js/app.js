@@ -50031,6 +50031,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	mounted: function mounted() {
@@ -50038,6 +50041,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	data: function data() {
 		return {
+			assistant: {
+				department_id: ''
+			},
 			departments: []
 		};
 	},
@@ -50054,6 +50060,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var uri = 'api/departments';
 			axios.get(uri).then(function (response) {
 				_this.departments = response.data;
+			}).catch(function (response) {
+				console.log(response.message);
+				alert('Error: ' + response.message);
+			});
+		},
+		addAssistant: function addAssistant() {
+			var uri = 'api/apply';
+			axios.post(uri, this.assistant).then(function (response) {
+				console.log(response);
 			}).catch(function (response) {
 				console.log(response.message);
 				alert('Error: ' + response.message);
@@ -50076,45 +50091,252 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-md-2 col-form-label text-right",
-                attrs: { for: "department_id" }
-              },
-              [_vm._v("学院")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-10" }, [
-              _c(
-                "select",
-                {
-                  staticClass: "form-control",
-                  attrs: { name: "department_id", required: "" }
-                },
-                _vm._l(_vm.departments, function(department) {
-                  return _c("option", { domProps: { value: department.id } }, [
-                    _vm._v(
-                      "\n\t\t\t\t\t\t\t\t" +
-                        _vm._s(department.name) +
-                        "\n\t\t\t\t\t\t\t"
-                    )
-                  ])
-                })
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm._m(4),
-          _vm._v(" "),
-          _vm._m(5)
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.addAssistant($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-2 col-form-label text-right",
+                    attrs: { for: "card_id" }
+                  },
+                  [_vm._v("工号")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.assistant.card_id,
+                        expression: "assistant.card_id"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "card_id",
+                      name: "card_id",
+                      placeholder: "工号",
+                      required: "",
+                      autofocus: ""
+                    },
+                    domProps: { value: _vm.assistant.card_id },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.assistant, "card_id", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-2 col-form-label text-right",
+                    attrs: { for: "name" }
+                  },
+                  [_vm._v("姓名")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.assistant.name,
+                        expression: "assistant.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "name",
+                      name: "name",
+                      placeholder: "姓名",
+                      required: ""
+                    },
+                    domProps: { value: _vm.assistant.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.assistant, "name", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-2 col-form-label text-right",
+                    attrs: { for: "department_id" }
+                  },
+                  [_vm._v("学院")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-10" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.assistant.department_id,
+                          expression: "assistant.department_id"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { name: "department_id", required: "" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.assistant,
+                            "department_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { disabled: "", value: "" } }, [
+                        _vm._v("请选择")
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.departments, function(department) {
+                        return _c(
+                          "option",
+                          { domProps: { value: department.id } },
+                          [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\t\t" +
+                                _vm._s(department.name) +
+                                "\n\t\t\t\t\t\t\t\t"
+                            )
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-2 col-form-label text-right",
+                    attrs: { for: "major" }
+                  },
+                  [_vm._v("专业")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.assistant.major,
+                        expression: "assistant.major"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "major",
+                      name: "major",
+                      placeholder: "专业"
+                    },
+                    domProps: { value: _vm.assistant.major },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.assistant, "major", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-md-2 col-form-label text-right",
+                    attrs: { for: "phone" }
+                  },
+                  [_vm._v("联系电话")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.assistant.phone,
+                        expression: "assistant.phone"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "phone",
+                      name: "phone",
+                      placeholder: "联系电话",
+                      required: ""
+                    },
+                    domProps: { value: _vm.assistant.phone },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.assistant, "phone", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ]
+          )
         ])
       ])
     ])
@@ -50128,118 +50350,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card-header text-center" }, [
       _c("h3", { staticClass: "md-3 font-weight-normal" }, [
         _vm._v("请助教输入相关信息")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-2 col-form-label text-right",
-          attrs: { for: "card_id" }
-        },
-        [_vm._v("工号")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "card_id",
-            name: "card_id",
-            placeholder: "工号",
-            required: "",
-            autofocus: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-2 col-form-label text-right",
-          attrs: { for: "name" }
-        },
-        [_vm._v("姓名")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "name",
-            name: "name",
-            placeholder: "姓名",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-2 col-form-label text-right",
-          attrs: { for: "major" }
-        },
-        [_vm._v("专业")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "major",
-            name: "major",
-            placeholder: "专业"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-2 col-form-label text-right",
-          attrs: { for: "phone" }
-        },
-        [_vm._v("联系电话")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "phone",
-            name: "phone",
-            placeholder: "联系电话",
-            required: ""
-          }
-        })
       ])
     ])
   },

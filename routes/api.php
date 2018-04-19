@@ -20,5 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['guest:api']], function () {
 	Route::get('/departments', 'HomeController@getDepartments');
 	Route::get('/courses', 'HomeController@getCourses');
-	Route::post('/apply', 'HomeController@store');
+	Route::post('/apply', 'HomeController@postAddAssistant');
+	Route::post('/update', 'HomeController@postUpdateCourse');
 });
