@@ -88,6 +88,7 @@
 				let uri = 'api/apply';
 				axios.post(uri, this.assistant).then((response) => {
 					console.log(response);
+					this.$router.push('course');
 				}).catch((response) => {
 					console.log(response.message);
 					alert('Error: ' + response.message);

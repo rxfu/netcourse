@@ -50066,9 +50066,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		addAssistant: function addAssistant() {
+			var _this2 = this;
+
 			var uri = 'api/apply';
 			axios.post(uri, this.assistant).then(function (response) {
 				console.log(response);
+				_this2.$router.push('course');
 			}).catch(function (response) {
 				console.log(response.message);
 				alert('Error: ' + response.message);

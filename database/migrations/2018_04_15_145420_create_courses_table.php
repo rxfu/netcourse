@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration {
 			$table->string('class', 20);
 			$table->string('campus', 10);
 			$table->boolean('is_used')->default(false);
-			$table->integer('assistant_id')->unsigned();
+			$table->integer('assistant_id')->unsigned()->nullable();
 			$table->timestamps();
 
 			$table->foreign('assistant_id')->references('id')->on('assistants')->onUpdate('cascade')->onDelete('cascade');
