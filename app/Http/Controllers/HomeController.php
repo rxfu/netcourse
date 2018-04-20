@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller {
 
+	private $asid;
+
 	public function getDepartments() {
 		$items = Department::orderBy('id')->get();
 
@@ -16,9 +18,24 @@ class HomeController extends Controller {
 	}
 
 	public function getCourses() {
-		$items = Course::whereIsUsed(false)->get();
+		dd($this->asid);
+		$exists = Course::whereAssistantId($this->asid)->exists();
+		if ($exists) {
+			$assistant = Assistant::findOrFail($this->asid);
+			$items     = Course::whereIsUsed(false)->get();
 
-		return response()->json($items);
+			return response()->json([
+				'status'    => true,
+				'assistant' => $assistant,
+				'courses'   => $items,
+			]);
+
+		} else {
+			return response()->json([
+				'status'  => false,
+				'message' => 'fail',
+			]);
+		}
 	}
 
 	public function postAddAssistant(Request $request) {
@@ -30,13 +47,23 @@ class HomeController extends Controller {
 				'phone'         => 'required',
 			]);
 
-			$assistant = new Assistant;
-			$assistant->fill($request->all());
-			if ($assistant->save()) {
-				return response()->json(['message' => 'Add successfully!']);
+			$exists = Assistant::whereCardId($request->input('card_id'))->exists();
+			if ($exists) {
+				$status  = true;
+				$message = 'already applied';
 			} else {
-				return response()->json(['message' => 'Add failed!']);
+				$assistant = new Assistant;
+				$assistant->fill($request->all());
+				$status  = $assistant->save();
+				$message = $status ? 'success' : 'failed';
 			}
+
+			$this->asid = Assistant::whereCardId($request->input('card_id'))->first()->id;
+
+			return response()->json([
+				'status'  => $status,
+				'message' => $message,
+			]);
 		}
 
 		return abort(500);
@@ -44,17 +71,28 @@ class HomeController extends Controller {
 
 	public function postUpdateCourses(Request $request) {
 		if ($request->ajax() && $request->isMethod('post')) {
-			foreach ($request->all() as $id) {
-				$course          = Course::findOrFail($id);
-				$course->is_used = true;
-				$course->save();
+			$exists = Course::whereAssistantId($this->asid)->exists();
+
+			if ($exists) {
+				foreach ($request->all() as $id) {
+					$course               = Course::findOrFail($id);
+					$course->is_used      = true;
+					$course->assistant_id = $this->asid;
+					$course->save();
+				}
+
+				$status  = true;
+				$message = 'success';
+
+			} else {
+				$status  = false;
+				$message = 'fail';
 			}
 
-			if (true) {
-				return response()->json(['message' => 'Add successfully!']);
-			} else {
-				return response()->json(['message' => 'Add failed!']);
-			}
+			return response()->json([
+				'status'  => $status,
+				'message' => $message,
+			]);
 		}
 
 		return abort(500);

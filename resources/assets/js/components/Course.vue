@@ -3,7 +3,7 @@
 		<div class="col-md-8">
 			<div class="card card-default">
 				<div class="card-header text-center">
-					<h3 class="md-3 font-weight-normal">可申请课程信息</h3>
+					<h3 class="md-3 font-weight-normal">{{ assistant.name }}助教可申请课程信息</h3>
 				</div>
 				<div class="card-body">
 						<form v-on:submit.prevent="updateCourse">
@@ -51,6 +51,7 @@
 
 		data() {
 			return {
+				assistant: {},
 				ids: [],
 				courses: []
 			}
@@ -64,7 +65,12 @@
 			fetchItems: function() {				
 				let uri = 'api/courses';
 				axios.get(uri).then((response) => {
-					this.courses = response.data;
+					if (response.data.status == true) {
+						this.assistant = response.data.assistant;
+						this.courses = response.data.courses;
+					} else {
+						this.$router.push('fail');
+					}
 				}).catch((response) => {
 					console.log(response.message);
 					alert('Error: ' + response.message);
@@ -75,7 +81,12 @@
 				let uri = 'api/update';
 				axios.post(uri, this.ids).then((response) => {
 					console.log(response);
-					this.$router.push('success');
+
+					if (response.data.status == true) {
+						this.$router.push('success');						
+					} else {
+						this.$router.push('fail');
+					}
 				}).catch((response) => {
 					console.log(response.message);
 					alert('Error: ' + response.message);

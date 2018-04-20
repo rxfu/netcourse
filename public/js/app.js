@@ -50071,7 +50071,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var uri = 'api/apply';
 			axios.post(uri, this.assistant).then(function (response) {
 				console.log(response);
-				_this2.$router.push('course');
+
+				if (response.data.status == true) {
+					_this2.$router.push('course');
+				} else {
+					_this2.$router.push('fail');
+				}
 			}).catch(function (response) {
 				console.log(response.message);
 				alert('Error: ' + response.message);
@@ -50485,6 +50490,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	data: function data() {
 		return {
+			assistant: {},
 			ids: [],
 			courses: []
 		};
@@ -50501,7 +50507,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			var uri = 'api/courses';
 			axios.get(uri).then(function (response) {
-				_this.courses = response.data;
+				if (response.data.status == true) {
+					_this.assistant = response.data.assistant;
+					_this.courses = response.data.courses;
+				} else {
+					_this.$router.push('fail');
+				}
 			}).catch(function (response) {
 				console.log(response.message);
 				alert('Error: ' + response.message);
@@ -50514,7 +50525,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var uri = 'api/update';
 			axios.post(uri, this.ids).then(function (response) {
 				console.log(response);
-				_this2.$router.push('success');
+
+				if (response.data.status == true) {
+					_this2.$router.push('success');
+				} else {
+					_this2.$router.push('fail');
+				}
 			}).catch(function (response) {
 				console.log(response.message);
 				alert('Error: ' + response.message);
@@ -50534,7 +50550,11 @@ var render = function() {
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-md-8" }, [
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "card-header text-center" }, [
+          _c("h3", { staticClass: "md-3 font-weight-normal" }, [
+            _vm._v(_vm._s(_vm.assistant.name) + "助教可申请课程信息")
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
@@ -50549,7 +50569,7 @@ var render = function() {
             },
             [
               _c("table", { staticClass: "table table-striped" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -50607,7 +50627,7 @@ var render = function() {
                   })
                 ),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(1)
               ])
             ]
           )
@@ -50617,16 +50637,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header text-center" }, [
-      _c("h3", { staticClass: "md-3 font-weight-normal" }, [
-        _vm._v("可申请课程信息")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
