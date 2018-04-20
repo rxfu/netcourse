@@ -50073,7 +50073,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				console.log(response);
 
 				if (response.data.status == true) {
-					_this2.$router.push('course');
+					_this2.$router.push({
+						name: 'course',
+						params: {
+							asid: _this2.assistant.card_id
+						}
+					});
 				} else {
 					_this2.$router.push('fail');
 				}
@@ -50505,7 +50510,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		fetchItems: function fetchItems() {
 			var _this = this;
 
-			var uri = 'api/courses';
+			var uri = 'api/' + this.$router.params.asid + '/courses';
 			axios.get(uri).then(function (response) {
 				if (response.data.status == true) {
 					_this.assistant = response.data.assistant;
@@ -50522,7 +50527,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		updateCourse: function updateCourse() {
 			var _this2 = this;
 
-			var uri = 'api/update';
+			var uri = 'api/' + this.$router.params.asid + '/update';
 			axios.post(uri, this.ids).then(function (response) {
 				console.log(response);
 

@@ -63,7 +63,7 @@
 
 		methods: {
 			fetchItems: function() {				
-				let uri = 'api/courses';
+				let uri = 'api/' + this.$router.params.asid + '/courses';
 				axios.get(uri).then((response) => {
 					if (response.data.status == true) {
 						this.assistant = response.data.assistant;
@@ -78,7 +78,7 @@
 			},
 
 			updateCourse() {
-				let uri = 'api/update';
+				let uri = 'api/' + this.$router.params.asid + '/update';
 				axios.post(uri, this.ids).then((response) => {
 					console.log(response);
 

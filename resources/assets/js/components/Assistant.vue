@@ -90,7 +90,12 @@
 					console.log(response);
 
 					if (response.data.status == true) {
-						this.$router.push('course');						
+						this.$router.push({
+							name: 'course',
+							params: {
+								asid: this.assistant.card_id
+							}
+						});						
 					} else {
 						this.$router.push('fail');
 					}

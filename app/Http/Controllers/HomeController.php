@@ -17,24 +17,28 @@ class HomeController extends Controller {
 		return response()->json($items);
 	}
 
-	public function getCourses() {
-		dd($this->asid);
-		$exists = Course::whereAssistantId($this->asid)->exists();
+	public function getCourses($asid) {
+		$exists = Assistant::whereCardId($asid)->exists();
+
 		if ($exists) {
-			$assistant = Assistant::findOrFail($this->asid);
-			$items     = Course::whereIsUsed(false)->get();
+			$assistant = Assistant::whereCardId($asid)->first();
 
-			return response()->json([
-				'status'    => true,
-				'assistant' => $assistant,
-				'courses'   => $items,
-			]);
+			$exists = Course::whereAssistantId($assistant->id)->exists();
+			if (!$exists) {
+				$items = Course::whereIsUsed(false)->get();
 
-		} else {
-			return response()->json([
-				'status'  => false,
-				'message' => 'fail',
-			]);
+				return response()->json([
+					'status'    => true,
+					'assistant' => $assistant,
+					'courses'   => $items,
+				]);
+
+			} else {
+				return response()->json([
+					'status'  => false,
+					'message' => 'fail',
+				]);
+			}
 		}
 	}
 
@@ -58,8 +62,6 @@ class HomeController extends Controller {
 				$message = $status ? 'success' : 'failed';
 			}
 
-			$this->asid = Assistant::whereCardId($request->input('card_id'))->first()->id;
-
 			return response()->json([
 				'status'  => $status,
 				'message' => $message,
@@ -69,11 +71,11 @@ class HomeController extends Controller {
 		return abort(500);
 	}
 
-	public function postUpdateCourses(Request $request) {
+	public function postUpdateCourses(Request $request, $asid) {
 		if ($request->ajax() && $request->isMethod('post')) {
-			$exists = Course::whereAssistantId($this->asid)->exists();
+			$exists = Course::whereAssistantId($asid)->exists();
 
-			if ($exists) {
+			if (!$exists) {
 				foreach ($request->all() as $id) {
 					$course               = Course::findOrFail($id);
 					$course->is_used      = true;
