@@ -50510,7 +50510,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		fetchItems: function fetchItems() {
 			var _this = this;
 
-			var uri = 'api/' + this.$router.params.asid + '/courses';
+			var uri = 'api/' + this.$route.params.asid + '/courses';
 			axios.get(uri).then(function (response) {
 				if (response.data.status == true) {
 					_this.assistant = response.data.assistant;
