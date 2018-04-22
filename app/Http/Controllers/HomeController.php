@@ -73,13 +73,14 @@ class HomeController extends Controller {
 
 	public function postUpdateCourses(Request $request, $asid) {
 		if ($request->ajax() && $request->isMethod('post')) {
-			$exists = Course::whereAssistantId($asid)->exists();
+			$aid    = Assistant::whereCardId($asid)->first()->id;
+			$exists = Course::whereAssistantId($aid)->exists();
 
 			if (!$exists) {
 				foreach ($request->all() as $id) {
 					$course               = Course::findOrFail($id);
 					$course->is_used      = true;
-					$course->assistant_id = $this->asid;
+					$course->assistant_id = $aid;
 					$course->save();
 				}
 

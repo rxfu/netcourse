@@ -50527,7 +50527,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		updateCourse: function updateCourse() {
 			var _this2 = this;
 
-			var uri = 'api/' + this.$router.params.asid + '/update';
+			var uri = 'api/' + this.$route.params.asid + '/update';
 			axios.post(uri, this.ids).then(function (response) {
 				console.log(response);
 

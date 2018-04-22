@@ -78,7 +78,7 @@
 			},
 
 			updateCourse() {
-				let uri = 'api/' + this.$router.params.asid + '/update';
+				let uri = 'api/' + this.$route.params.asid + '/update';
 				axios.post(uri, this.ids).then((response) => {
 					console.log(response);
 
