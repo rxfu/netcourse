@@ -50506,6 +50506,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.fetchItems();
 	},
 
+	computed: {
+		course_name: function course_name() {
+			return this.ids.map(function (course) {
+				return course.name + '-' + course.class;
+			}).join();
+		}
+	},
+
 	methods: {
 		fetchItems: function fetchItems() {
 			var _this = this;
@@ -50527,19 +50535,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		updateCourse: function updateCourse() {
 			var _this2 = this;
 
-			var uri = 'api/' + this.$route.params.asid + '/update';
-			axios.post(uri, this.ids).then(function (response) {
-				console.log(response);
+			if (confirm('请问确定要选择教授课程（' + this.course_name + '）吗？')) {
+				var uri = 'api/' + this.$route.params.asid + '/update';
+				axios.post(uri, this.ids).then(function (response) {
+					console.log(response);
 
-				if (response.data.status == true) {
-					_this2.$router.push('success');
-				} else {
-					_this2.$router.push('fail');
-				}
-			}).catch(function (response) {
-				console.log(response.message);
-				alert('Error: ' + response.message);
-			});
+					if (response.data.status == true) {
+						_this2.$router.push('success');
+					} else {
+						_this2.$router.push('fail');
+					}
+				}).catch(function (response) {
+					console.log(response.message);
+					alert('Error: ' + response.message);
+				});
+			}
 		}
 	}
 });
@@ -50594,12 +50604,12 @@ var render = function() {
                             type: "checkbox",
                             disabled:
                               _vm.ids.length > 2 &&
-                              _vm.ids.indexOf(course.id) === -1
+                              _vm.ids.indexOf(course) === -1
                           },
                           domProps: {
-                            value: course.id,
+                            value: course,
                             checked: Array.isArray(_vm.ids)
-                              ? _vm._i(_vm.ids, course.id) > -1
+                              ? _vm._i(_vm.ids, course) > -1
                               : _vm.ids
                           },
                           on: {
@@ -50608,7 +50618,7 @@ var render = function() {
                                 $$el = $event.target,
                                 $$c = $$el.checked ? true : false
                               if (Array.isArray($$a)) {
-                                var $$v = course.id,
+                                var $$v = course,
                                   $$i = _vm._i($$a, $$v)
                                 if ($$el.checked) {
                                   $$i < 0 && (_vm.ids = $$a.concat([$$v]))

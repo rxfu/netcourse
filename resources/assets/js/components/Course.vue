@@ -20,7 +20,7 @@
 							<tbody>
 								<tr v-for="course in courses">
 									<td>
-										<input type="checkbox" :value="course.id" v-model="ids" :disabled="ids.length > 2 && ids.indexOf(course.id) === -1">
+										<input type="checkbox" :value="course" v-model="ids" :disabled="ids.length > 2 && ids.indexOf(course) === -1">
 									</td>
 									<td><i>{{ course.id }}</i></td>
 									<td>{{ course.name }}</td>
@@ -61,6 +61,12 @@
 			this.fetchItems();
 		},
 
+		computed: {
+			course_name: function() {
+				return this.ids.map(course => course.name + '-' + course.class).join();
+			}
+		},
+
 		methods: {
 			fetchItems: function() {				
 				let uri = 'api/' + this.$route.params.asid + '/courses';
@@ -78,19 +84,21 @@
 			},
 
 			updateCourse() {
-				let uri = 'api/' + this.$route.params.asid + '/update';
-				axios.post(uri, this.ids).then((response) => {
-					console.log(response);
-
-					if (response.data.status == true) {
-						this.$router.push('success');						
-					} else {
-						this.$router.push('fail');
-					}
-				}).catch((response) => {
-					console.log(response.message);
-					alert('Error: ' + response.message);
-				})
+				if (confirm('请问确定要选择教授课程（' + this.course_name + '）吗？')) {
+					let uri = 'api/' + this.$route.params.asid + '/update';
+					axios.post(uri, this.ids).then((response) => {
+						console.log(response);
+	
+						if (response.data.status == true) {
+							this.$router.push('success');						
+						} else {
+							this.$router.push('fail');
+						}
+					}).catch((response) => {
+						console.log(response.message);
+						alert('Error: ' + response.message);
+					})
+				}
 			}
 		}
 	}

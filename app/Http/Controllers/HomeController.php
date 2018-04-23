@@ -77,7 +77,7 @@ class HomeController extends Controller {
 			$exists = Course::whereAssistantId($aid)->exists();
 
 			if (!$exists) {
-				foreach ($request->all() as $id) {
+				foreach (array_column($request->all(), 'id') as $id) {
 					$course               = Course::findOrFail($id);
 					$course->is_used      = true;
 					$course->assistant_id = $aid;
