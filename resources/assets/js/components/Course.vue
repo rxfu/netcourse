@@ -20,7 +20,7 @@
 							<tbody>
 								<tr v-for="course in courses">
 									<td>
-										<input type="checkbox" :value="course.id" v-model="ids">
+										<input type="checkbox" :value="course.id" v-model="ids" :disabled="ids.length > 2 && ids.indexOf(course.id) === -1">
 									</td>
 									<td><i>{{ course.id }}</i></td>
 									<td>{{ course.name }}</td>

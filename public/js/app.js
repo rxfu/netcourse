@@ -50590,7 +50590,12 @@ var render = function() {
                               expression: "ids"
                             }
                           ],
-                          attrs: { type: "checkbox" },
+                          attrs: {
+                            type: "checkbox",
+                            disabled:
+                              _vm.ids.length > 2 &&
+                              _vm.ids.indexOf(course.id) === -1
+                          },
                           domProps: {
                             value: course.id,
                             checked: Array.isArray(_vm.ids)
