@@ -50360,11 +50360,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header text-center" }, [
-      _c("h3", { staticClass: "md-3 font-weight-normal" }, [
-        _vm._v("请助教输入相关信息")
-      ])
-    ])
+    return _c(
+      "div",
+      { staticClass: "card-header text-center bg-primary text-white" },
+      [
+        _c("h3", { staticClass: "md-3 font-weight-normal" }, [
+          _vm._v("请助教输入相关信息")
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -50565,11 +50569,15 @@ var render = function() {
   return _c("div", { staticClass: "row justify-content-center" }, [
     _c("div", { staticClass: "col-md-8" }, [
       _c("div", { staticClass: "card card-default" }, [
-        _c("div", { staticClass: "card-header text-center" }, [
-          _c("h3", { staticClass: "md-3 font-weight-normal" }, [
-            _vm._v(_vm._s(_vm.assistant.name) + "助教可申请课程信息")
-          ])
-        ]),
+        _c(
+          "div",
+          { staticClass: "card-header text-center bg-primary text-white" },
+          [
+            _c("h3", { staticClass: "md-3 font-weight-normal" }, [
+              _vm._v(_vm._s(_vm.assistant.name) + "助教可申请课程信息")
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
@@ -50960,6 +50968,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	mounted: function mounted() {
@@ -50976,21 +50990,37 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
     _c(
       "main",
       { staticClass: "container", attrs: { role: "main" } },
-      [
-        _c("h1", { staticClass: "text-center" }, [
-          _vm._v("网络课程助教申请系统")
-        ]),
-        _vm._v(" "),
-        _c("router-view")
-      ],
+      [_c("router-view")],
       1
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c(
+            "h1",
+            {
+              staticClass: "text-center text-primary",
+              staticStyle: { margin: "30px 0" }
+            },
+            [_vm._v("网络课程助教申请系统")]
+          )
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

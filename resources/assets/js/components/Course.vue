@@ -2,7 +2,7 @@
 	<div class="row justify-content-center">
 		<div class="col-md-8">
 			<div class="card card-default">
-				<div class="card-header text-center">
+				<div class="card-header text-center bg-primary text-white">
 					<h3 class="md-3 font-weight-normal">{{ assistant.name }}助教可申请课程信息</h3>
 				</div>
 				<div class="card-body">
