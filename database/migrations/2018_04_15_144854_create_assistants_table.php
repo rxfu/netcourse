@@ -13,14 +13,16 @@ class CreateAssistantsTable extends Migration {
 	 */
 	public function up() {
 		Schema::create('assistants', function (Blueprint $table) {
-			$table->increments('id');
-			$table->string('card_id', 20);
+			$table->string('id');
+			$table->string('username', 20);
+			$table->string('password', 255);
 			$table->string('name', 50);
 			$table->integer('department_id')->unsigned();
 			$table->string('major', 100)->nullable();
 			$table->string('phone', 20);
 			$table->timestamps();
 
+			$table->primary('id');
 			$table->foreign('department_id')->references('id')->on('departments')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
