@@ -20,7 +20,7 @@ class CreateScoresTable extends Migration {
 			$table->tinyInteger('score')->unsigned()->default(0);
 			$table->timestamps();
 
-			$table->foreign('course_id')->references('id')->on('course')->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 
