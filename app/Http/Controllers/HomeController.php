@@ -19,7 +19,6 @@ class HomeController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		dd('home');
 		return view('home');
 	}
 }
