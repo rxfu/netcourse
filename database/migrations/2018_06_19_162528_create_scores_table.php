@@ -18,6 +18,7 @@ class CreateScoresTable extends Migration {
 			$table->string('card_id');
 			$table->string('name');
 			$table->tinyInteger('score')->unsigned()->default(0);
+			$table->boolean('is_confirmed')->default(false);
 			$table->timestamps();
 
 			$table->foreign('course_id')->references('id')->on('courses')->onUpdate('cascade')->onDelete('cascade');

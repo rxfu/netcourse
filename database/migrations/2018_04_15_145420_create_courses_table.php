@@ -18,10 +18,10 @@ class CreateCoursesTable extends Migration {
 			$table->string('class', 20);
 			$table->string('campus', 10);
 			$table->boolean('is_used')->default(false);
-			$table->string('assistant_id')->nullable();
+			$table->string('user_id')->nullable();
 			$table->timestamps();
 
-			$table->foreign('assistant_id')->references('id')->on('assistants')->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

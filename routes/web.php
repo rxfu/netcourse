@@ -10,7 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-
+/*
 Route::get('{path}', function () {
-	return view('index');
+return view('index');
 })->where('path', '(.*)');
+ */
+Route::get('/', function () {
+	return redirect('home');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/course', 'HomeController@getCourse')->name('course');
+Route::get('/score', 'HomeController@getScore')->name('score');
+Route::put('/score', 'HomeController@putScore');
