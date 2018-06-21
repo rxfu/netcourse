@@ -4,7 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Score extends Model
-{
-    //
+class Score extends Model {
+
+	protected $casts = [
+		'is_confirmed' => 'boolean',
+	];
 }

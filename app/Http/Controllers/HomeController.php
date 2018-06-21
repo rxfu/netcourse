@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Score;
 use Auth;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller {
 
@@ -33,5 +34,28 @@ class HomeController extends Controller {
 		$students = Score::whereCourseId($id)->get();
 
 		return view('student', compact('students', 'course'));
+	}
+
+	public function score(Request $request) {
+		if ($request->isMethod('put')) {
+			$request->validate([
+				'score' => 'required|min:0|max:l00',
+			]);
+
+			$score = Score::findOrFail($request->input('id'));
+
+			$score->score = $request->input('score');
+			$score->save();
+		}
+	}
+
+	public function confirm(Request $request) {
+		if ($request->isMethod('post')) {
+			Score::whereCourseId($request->input('course'))->update(['is_confirmed' => true]);
+
+			$request->session()->flash('提交成功');
+		}
+
+		return back();
 	}
 }

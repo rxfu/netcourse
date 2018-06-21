@@ -23,5 +23,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/student/{id}', 'HomeController@student')->name('student');
+Route::post('/score', 'HomeController@confirm');
 Route::put('/score', 'HomeController@score');
-Route::post('/confirm', 'HomeController@confirm');
