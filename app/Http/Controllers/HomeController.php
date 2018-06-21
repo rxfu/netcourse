@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\Score;
+use Auth;
+
 class HomeController extends Controller {
 
 	/**
@@ -19,6 +23,15 @@ class HomeController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		return view('home');
+		$courses = Course::whereUserId(Auth::user()->id)->get();
+
+		return view('home', compact('courses'));
+	}
+
+	public function student($id) {
+		$course   = $id;
+		$students = Score::whereCourseId($id)->get();
+
+		return view('student', compact('students', 'course'));
 	}
 }
