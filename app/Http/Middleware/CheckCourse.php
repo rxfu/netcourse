@@ -15,8 +15,10 @@ class CheckCourse {
 	 * @return mixed
 	 */
 	public function handle($request, Closure $next) {
-		if (!Course::whereUserId($request->user()->id)->whereId($request->course)->exists()) {
-			return redirect('home');
+		if ($request->user()->username !== 'admin') {
+			if (!Course::whereUserId($request->user()->id)->whereId($request->course)->exists()) {
+				return redirect('home');
+			}
 		}
 
 		return $next($request);

@@ -24,7 +24,11 @@ class HomeController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index() {
-		$courses = Course::whereUserId(Auth::user()->id)->get();
+		if (Auth::user()->username === 'admin') {
+			$courses = Course::orderBy('id')->get();
+		} else {
+			$courses = Course::whereUserId(Auth::user()->id)->get();
+		}
 
 		return view('home', compact('courses'));
 	}

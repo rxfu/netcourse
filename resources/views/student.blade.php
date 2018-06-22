@@ -34,7 +34,7 @@
                                         <td>{{ $student->card_id }}</td>
                                         <td>{{ $student->name }}</td>
                                         <td>
-                                            @if ($student->is_confirmed)
+                                            @if ($student->is_confirmed || Auth::user()->username === 'admin')
                                                 {!! $student->score < 60 ? '<span class="text-danger">' . $student->score . "</span>" : $student->score !!}
                                             @else
                                                 <input type="text" id="{{ $student->id }}" name="score" class="form-control" placeholder="{{ $student->name }}" value="{{ $student->score }}">
