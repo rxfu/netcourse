@@ -39,7 +39,7 @@ class HomeController extends Controller {
 	public function score(Request $request) {
 		if ($request->isMethod('put')) {
 			$request->validate([
-				'score' => 'required|min:0|max:l00',
+				'score' => 'required|integer|min:0|max:100',
 			]);
 
 			$score = Score::findOrFail($request->input('id'));

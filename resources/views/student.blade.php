@@ -38,15 +38,7 @@
                                                 {!! $student->score < 60 ? '<span class="text-danger">' . $student->score . "</span>" : $student->score !!}
                                             @else
                                                 <input type="text" id="{{ $student->id }}" name="score" class="form-control" placeholder="{{ $student->name }}" value="{{ $student->score }}">
-                                                @if ($errors->any())
-                                                    <span class="text-danger">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                                <li>{{ $error }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </span>
-                                                @endif
+                                                <small class="form-text text-danger"></small>
                                             @endif
                                         </td>
                                     </tr>
@@ -86,7 +78,8 @@ $(function() {
             $(this).select();
         },
         'change': function() {
-            var id = $(this).attr('id');
+            var student = $(this);
+            var id = student.attr('id');
 
             // Use ajax to submit form data
             $.ajax({
@@ -97,8 +90,18 @@ $(function() {
                     '_method': 'put',
                     '_token': '{{ csrf_token() }}',
                     'dataType': 'json',
-                    'score': $(this).val(),
+                    'score': student.val(),
                     'id': id
+                },
+                success: function(data) {
+                    student.removeClass('border-danger');
+                    student.next().text('');
+                },
+                error: function(data) {
+                    var errors = data.responseJSON;
+                    console.log(errors);
+                    student.addClass('border-danger');
+                    student.next().text(errors.errors.score);
                 }
             });
         },
