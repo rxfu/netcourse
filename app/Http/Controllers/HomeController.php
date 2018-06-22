@@ -51,6 +51,10 @@ class HomeController extends Controller {
 
 	public function confirm(Request $request) {
 		if ($request->isMethod('post')) {
+			$request->validate([
+				'score' => 'required|integer|min:0|max:100',
+			]);
+
 			Score::whereCourseId($request->input('course'))->update(['is_confirmed' => true]);
 
 			$request->session()->flash('提交成功');

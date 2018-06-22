@@ -46,9 +46,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td colspan="2">
+                                    <td colspan="4" style="text-align: center">
                                         <button type="submit" class="btn btn-primary" title="提交">提交</button>
                                     </td>
                                 </tr>
