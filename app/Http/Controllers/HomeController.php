@@ -29,9 +29,9 @@ class HomeController extends Controller {
 		return view('home', compact('courses'));
 	}
 
-	public function student($id) {
-		$course   = $id;
-		$students = Score::whereCourseId($id)->get();
+	public function student($course) {
+		$course   = $course;
+		$students = Score::whereCourseId($course)->get();
 
 		return view('student', compact('students', 'course'));
 	}

@@ -91,7 +91,8 @@ $(function() {
                     '_token': '{{ csrf_token() }}',
                     'dataType': 'json',
                     'score': student.val(),
-                    'id': id
+                    'id': id,
+                    'course': {{ $course }}
                 },
                 success: function(data) {
                     student.removeClass('border-danger');
@@ -102,6 +103,7 @@ $(function() {
                     console.log(errors);
                     student.addClass('border-danger');
                     student.next().text(errors.errors.score);
+                    student.focus().select();
                 }
             });
         },

@@ -22,6 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/student/{id}', 'HomeController@student')->name('student');
-Route::post('/score', 'HomeController@confirm');
-Route::put('/score', 'HomeController@score');
+Route::group(['middleware' => ['App\Http\Middleware\CheckCourse']], function () {
+	Route::get('/student/{course}', 'HomeController@student')->name('student');
+	Route::post('/score', 'HomeController@confirm');
+	Route::put('/score', 'HomeController@score');
+});
