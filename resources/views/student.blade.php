@@ -44,13 +44,15 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="4" style="text-align: center">
-                                        <button type="submit" class="btn btn-primary" title="提交">提交</button>
-                                    </td>
-                                </tr>
-                            </tfoot>
+                            @if (!$student->is_confirmed && Auth::user()->username !== 'admin')
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4" style="text-align: center">
+                                            <button type="submit" class="btn btn-primary" title="提交">提交</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            @endif
                         </table>
                     </form>
                 </div>
