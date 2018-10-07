@@ -11,8 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+    <!--
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    -->
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
@@ -39,9 +41,9 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
+                            <!--li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">登录</a>
-                            </li>
+                            </li-->
                             <!--li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">申请</a>
                             </li-->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Department;
 use App\Score;
 use Auth;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->middleware('auth');
+		$this->middleware('auth')->except('getAssistant');
 	}
 
 	/**
@@ -69,10 +70,10 @@ class HomeController extends Controller {
 
 	private $asid;
 
-	public function getDepartments() {
-		$items = Department::orderBy('id')->get();
+	public function getAssistant() {
+		$departments = Department::orderBy('id')->get();
 
-		return response()->json($items);
+		return view('assistant', compact('departments'));
 	}
 
 	public function getCourses($asid) {
@@ -83,25 +84,15 @@ class HomeController extends Controller {
 
 			$exists = Course::whereAssistantId($assistant->id)->exists();
 			if (!$exists) {
-				$items = Course::whereIsUsed(false)->get();
-
-				return response()->json([
-					'status'    => true,
-					'assistant' => $assistant,
-					'courses'   => $items,
-				]);
-
-			} else {
-				return response()->json([
-					'status'  => false,
-					'message' => 'fail',
-				]);
+				$courses = Course::whereIsUsed(false)->get();
 			}
+
+			return view('course', compact('assistant', 'courses'));
 		}
 	}
 
 	public function postAddAssistant(Request $request) {
-		if ($request->ajax() && $request->isMethod('post')) {
+		if ($request->isMethod('post')) {
 			$this->validate($request, [
 				'card_id'       => 'required',
 				'name'          => 'required',
@@ -120,17 +111,14 @@ class HomeController extends Controller {
 				$message = $status ? 'success' : 'failed';
 			}
 
-			return response()->json([
-				'status'  => $status,
-				'message' => $message,
-			]);
+			return $status ? $request->session()->flash('提交成功') : $request->session()->flash('提交失败');
 		}
 
 		return abort(500);
 	}
 
 	public function postUpdateCourses(Request $request, $asid) {
-		if ($request->ajax() && $request->isMethod('post')) {
+		if ($request->isMethod('post')) {
 			$aid    = Assistant::whereCardId($asid)->first()->id;
 			$exists = Course::whereAssistantId($aid)->exists();
 

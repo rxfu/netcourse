@@ -16,12 +16,17 @@ return view('index');
 })->where('path', '(.*)');
  */
 Route::get('/', function () {
-	return redirect('home');
+	return redirect('apply');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{asid}/courses', 'HomeController@getCourses');
+Route::get('/apply', 'HomeController@getAssistant');
+Route::post('/apply', 'HomeController@postAddAssistant');
+Route::post('/{asid}/update', 'HomeController@postUpdateCourses');
+
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/password', 'PasswordController@password')->name('password');
 	Route::put('/password', 'PasswordController@change');
