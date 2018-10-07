@@ -14,9 +14,11 @@ class CreateCoursesTable extends Migration {
 	public function up() {
 		Schema::create('courses', function (Blueprint $table) {
 			$table->increments('id');
-			$table->string('name', 50);
+			$table->string('clsno', 30);
 			$table->string('class', 20);
-			$table->string('campus', 10);
+			$table->string('crsno', 8);
+			$table->string('name', 50);
+			$table->integer('stucount')->unsigned();
 			$table->boolean('is_used')->default(false);
 			$table->string('user_id')->nullable();
 			$table->timestamps();
