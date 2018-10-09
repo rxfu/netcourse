@@ -22,10 +22,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/{asid}/courses', 'HomeController@getCourses');
-Route::get('/apply', 'HomeController@getAssistant');
+Route::get('/courses', 'HomeController@getCourses');
+Route::get('/assistant', 'HomeController@getAssistant');
+Route::get('/apply', 'HomeController@getAssistantForm');
 Route::post('/apply', 'HomeController@postAddAssistant');
-Route::post('/{asid}/update', 'HomeController@postUpdateCourses');
+Route::put('/update', 'HomeController@putUpdateCourses');
+Route::get('/signout', 'HomeController@getSignout');
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/password', 'PasswordController@password')->name('password');

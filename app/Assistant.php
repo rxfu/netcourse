@@ -12,6 +12,6 @@ class Assistant extends Model {
 	 * @var array
 	 */
 	protected $fillable = [
-		'card_id', 'name', 'department_id', 'major', 'phone',
+		'id', 'name', 'department_id', 'major', 'phone',
 	];
 }

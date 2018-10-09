@@ -13,9 +13,9 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="card_id" class="col-md-2 col-form-label text-right">工号</label>
+                            <label for="id" class="col-md-2 col-form-label text-right">工号</label>
                             <div class="col-md-10">
-                                <input type="text" id="card_id" name="card_id" class="form-control" placeholder="工号" required autofocus>
+                                <input type="text" id="id" name="id" class="form-control" placeholder="工号" required autofocus>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -27,7 +27,7 @@
                         <div class="form-group row">
                             <label for="department_id" class="col-md-2 col-form-label text-right">学院</label>
                             <div class="col-md-10">
-                                <select name="department_id" class="form-control" required>
+                                <select name="department_id" id="department_id" class="form-control" required>
                                     <option disabled value="">请选择</option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -59,3 +59,26 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+$(function() {
+    $('input#id').on('keyup focusout', function() {
+        $.ajax({
+            url: 'assistant',
+            type: 'get',
+            dataType: 'json',
+            data: {
+                id: this.value
+            },
+            success: function(data) {
+                $('#name').val(data.assistant.name);
+                $('#department_id').val(data.assistant.department_id);
+                $('#major').val(data.assistant.major);
+                $('#phone').val(data.assistant.phone);
+            }
+        })
+    });
+})
+</script>
+@endpush

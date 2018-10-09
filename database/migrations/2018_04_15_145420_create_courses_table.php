@@ -20,10 +20,10 @@ class CreateCoursesTable extends Migration {
 			$table->string('name', 50);
 			$table->integer('stucount')->unsigned();
 			$table->boolean('is_used')->default(false);
-			$table->string('user_id')->nullable();
+			$table->string('assistant_id')->nullable();
 			$table->timestamps();
 
-			$table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+			$table->foreign('assistant_id')->references('id')->on('assistants')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

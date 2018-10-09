@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Assistant;
 use App\Course;
 use App\Department;
 use App\Score;
@@ -16,7 +17,7 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->middleware('auth')->except('getAssistant');
+		$this->middleware('auth')->except('getAssistant', 'getAssistantForm', 'postAddAssistant', 'getCourses', 'putUpdateCourses', 'getSignout');
 	}
 
 	/**
@@ -70,63 +71,83 @@ class HomeController extends Controller {
 
 	private $asid;
 
-	public function getAssistant() {
+	public function getAssistant(Request $request) {
+		$id = $request->input('id');
+
+		if (Assistant::whereId($id)->exists()) {
+			$assistant = Assistant::findOrFail($id);
+
+			return response()->json([
+				'assistant' => $assistant,
+			]);
+		}
+	}
+
+	public function getAssistantForm() {
 		$departments = Department::orderBy('id')->get();
 
 		return view('assistant', compact('departments'));
 	}
 
-	public function getCourses($asid) {
-		$exists = Assistant::whereCardId($asid)->exists();
+	public function postAddAssistant(Request $request) {
+		if ($request->isMethod('post')) {
+			$this->validate($request, [
+				'id'            => 'required',
+				'name'          => 'required',
+				'department_id' => 'required',
+				'phone'         => 'required',
+			]);
+
+			$exists = Assistant::whereId($request->input('id'))->exists();
+			if (!$exists) {
+				$assistant = new Assistant;
+				$assistant->fill($request->all());
+				$assistant->username = $assistant->phone;
+				$assistant->password = $assistant->phone;
+				$status              = $assistant->save();
+				$message             = $status ? 'success' : 'failed';
+			} else {
+				$assistant = Assistant::findOrFail($request->input('id'));
+				$assistant->fill($request->all());
+				$assistant->save();
+				$message = '已有助教信息';
+			}
+
+			$request->session()->flash($message);
+			session(['id' => $request->input('id')]);
+
+			return redirect('/courses');
+		}
+
+		return abort(500);
+	}
+
+	public function getCourses() {
+		$exists = Assistant::whereId(session('id'))->exists();
 
 		if ($exists) {
-			$assistant = Assistant::whereCardId($asid)->first();
+			$assistant = Assistant::findOrFail(session('id'));
 
 			$exists = Course::whereAssistantId($assistant->id)->exists();
 			if (!$exists) {
 				$courses = Course::whereIsUsed(false)->get();
+			} else {
+				$courses = Course::whereAssistantId($assistant->id)->get();
 			}
 
 			return view('course', compact('assistant', 'courses'));
 		}
 	}
 
-	public function postAddAssistant(Request $request) {
-		if ($request->isMethod('post')) {
-			$this->validate($request, [
-				'card_id'       => 'required',
-				'name'          => 'required',
-				'department_id' => 'required',
-				'phone'         => 'required',
-			]);
-
-			$exists = Assistant::whereCardId($request->input('card_id'))->exists();
-			if ($exists) {
-				$status  = true;
-				$message = 'already applied';
-			} else {
-				$assistant = new Assistant;
-				$assistant->fill($request->all());
-				$status  = $assistant->save();
-				$message = $status ? 'success' : 'failed';
-			}
-
-			return $status ? $request->session()->flash('提交成功') : $request->session()->flash('提交失败');
-		}
-
-		return abort(500);
-	}
-
-	public function postUpdateCourses(Request $request, $asid) {
-		if ($request->isMethod('post')) {
-			$aid    = Assistant::whereCardId($asid)->first()->id;
-			$exists = Course::whereAssistantId($aid)->exists();
+	public function putUpdateCourses(Request $request) {
+		if ($request->isMethod('put')) {
+			$exists = Course::whereAssistantId(session('id'))->exists();
 
 			if (!$exists) {
-				foreach (array_column($request->all(), 'id') as $id) {
+				foreach ($request->input('id') as $id) {
 					$course               = Course::findOrFail($id);
 					$course->is_used      = true;
-					$course->assistant_id = $aid;
+					$course->assistant_id = session('id');
 					$course->save();
 				}
 
@@ -138,12 +159,19 @@ class HomeController extends Controller {
 				$message = 'fail';
 			}
 
-			return response()->json([
-				'status'  => $status,
-				'message' => $message,
-			]);
+			$request->session()->flash($message);
+
+			return back();
 		}
 
 		return abort(500);
+	}
+
+	public function getSignout() {
+		session()->forget('id');
+
+		session()->flush();
+
+		return redirect('/apply');
 	}
 }
