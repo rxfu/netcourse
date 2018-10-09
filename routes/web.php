@@ -26,7 +26,7 @@ Route::get('/courses', 'HomeController@getCourses');
 Route::get('/assistant', 'HomeController@getAssistant');
 Route::get('/apply', 'HomeController@getAssistantForm');
 Route::post('/apply', 'HomeController@postAddAssistant');
-Route::put('/update', 'HomeController@putUpdateCourses');
+Route::patch('/update', 'HomeController@patchUpdateCourses');
 Route::get('/signout', 'HomeController@getSignout');
 
 Route::group(['middleware' => ['auth']], function () {

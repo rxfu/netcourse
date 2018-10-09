@@ -18,7 +18,7 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->middleware('auth')->except('getAssistant', 'getAssistantForm', 'postAddAssistant', 'getCourses', 'putUpdateCourses', 'getSignout');
+		$this->middleware('auth')->except('getAssistant', 'getAssistantForm', 'postAddAssistant', 'getCourses', 'patchUpdateCourses', 'getSignout');
 	}
 
 	/**
@@ -69,8 +69,6 @@ class HomeController extends Controller {
 
 		return back();
 	}
-
-	private $asid;
 
 	public function getAssistant(Request $request) {
 		$id = $request->input('id');
@@ -146,8 +144,8 @@ class HomeController extends Controller {
 		}
 	}
 
-	public function putUpdateCourses(Request $request) {
-		if ($request->isMethod('post')) {
+	public function patchUpdateCourses(Request $request) {
+		if ($request->isMethod('patch')) {
 			$exists = Course::whereAssistantId(session('id'))->exists();
 
 			if (!$exists) {
