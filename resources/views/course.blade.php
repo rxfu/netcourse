@@ -17,8 +17,8 @@
                     @endif
 
                     <form method="POST" action="{{ url('/update') }}" role="form">
-                        @method('PUT')
                         @csrf
+                        @method('PUT')
 
                         <table class="table table-striped">
                             <thead>

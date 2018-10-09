@@ -6,6 +6,7 @@ use App\Assistant;
 use App\Course;
 use App\Department;
 use App\Score;
+use App\Student;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -98,6 +99,12 @@ class HomeController extends Controller {
 				'phone'         => 'required',
 			]);
 
+			if (Student::whereXh($request->input('id'))->exists()) {
+				$request->session()->flash('status', '本科生不允许申请助教');
+
+				return back();
+			}
+
 			$exists = Assistant::whereId($request->input('id'))->exists();
 			if (!$exists) {
 				$assistant = new Assistant;
@@ -105,7 +112,7 @@ class HomeController extends Controller {
 				$assistant->username = $assistant->phone;
 				$assistant->password = $assistant->phone;
 				$status              = $assistant->save();
-				$message             = $status ? 'success' : 'failed';
+				$message             = $status ? '提交成功' : '提交失败';
 			} else {
 				$assistant = Assistant::findOrFail($request->input('id'));
 				$assistant->fill($request->all());
@@ -113,7 +120,7 @@ class HomeController extends Controller {
 				$message = '已有助教信息';
 			}
 
-			$request->session()->flash($message);
+			$request->session()->flash('status', $message);
 			session(['id' => $request->input('id')]);
 
 			return redirect('/courses');
@@ -140,7 +147,7 @@ class HomeController extends Controller {
 	}
 
 	public function putUpdateCourses(Request $request) {
-		if ($request->isMethod('put')) {
+		if ($request->isMethod('post')) {
 			$exists = Course::whereAssistantId(session('id'))->exists();
 
 			if (!$exists) {
@@ -152,14 +159,14 @@ class HomeController extends Controller {
 				}
 
 				$status  = true;
-				$message = 'success';
+				$message = '申请成功';
 
 			} else {
 				$status  = false;
-				$message = 'fail';
+				$message = '申请失败';
 			}
 
-			$request->session()->flash($message);
+			$request->session()->flash('status', $message);
 
 			return back();
 		}

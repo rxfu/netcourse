@@ -9,6 +9,12 @@
                     <h3 class="md-3 font-weight-normal">请助教输入相关信息</h3>
                 </div>
                 <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-warning" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ url('/apply') }}" aria-label="助教信息录入">
                         @csrf
 
