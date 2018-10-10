@@ -16,7 +16,7 @@ return view('index');
 })->where('path', '(.*)');
  */
 Route::get('/', function () {
-	return redirect('apply');
+	return redirect('home');
 });
 
 Auth::routes();
@@ -27,7 +27,6 @@ Route::get('/assistant', 'HomeController@getAssistant');
 Route::get('/apply', 'HomeController@getAssistantForm');
 Route::post('/apply', 'HomeController@postAddAssistant');
 Route::patch('/update', 'HomeController@patchUpdateCourses');
-Route::get('/signout', 'HomeController@getSignout');
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/password', 'PasswordController@password')->name('password');

@@ -40,13 +40,10 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @if (session()->has('id'))
-                            <a class="nav-link" href="{{ url('/signout') }}">退出</a>
-                        @endif
                         @guest
-                            <!--li class="nav-item">
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">登录</a>
-                            </li-->
+                            </li>
                             <!--li class="nav-item">
                                 <a class="nav-link" href="{{ route('register') }}">申请</a>
                             </li-->

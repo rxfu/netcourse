@@ -18,7 +18,7 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->middleware('auth')->except('getAssistant', 'getAssistantForm', 'postAddAssistant', 'getCourses', 'patchUpdateCourses', 'getSignout');
+		$this->middleware('auth');
 	}
 
 	/**
@@ -108,7 +108,7 @@ class HomeController extends Controller {
 				$assistant = new Assistant;
 				$assistant->fill($request->all());
 				$assistant->username = $assistant->phone;
-				$assistant->password = $assistant->phone;
+				$assistant->password = str_random(8);
 				$status              = $assistant->save();
 				$message             = $status ? '提交成功' : '提交失败';
 			} else {
@@ -170,13 +170,5 @@ class HomeController extends Controller {
 		}
 
 		return abort(500);
-	}
-
-	public function getSignout() {
-		session()->forget('id');
-
-		session()->flush();
-
-		return redirect('/apply');
 	}
 }
