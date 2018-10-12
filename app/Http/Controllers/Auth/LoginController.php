@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Assistant;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller {
 
@@ -18,14 +20,16 @@ class LoginController extends Controller {
 	|
 	 */
 
-	use AuthenticatesUsers;
+	use AuthenticatesUsers {
+		login as protected traitLogin;
+	}
 
 	/**
 	 * Where to redirect users after login.
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/home';
+	protected $redirectTo = '/apply';
 
 	/**
 	 * Create a new controller instance.
@@ -38,5 +42,13 @@ class LoginController extends Controller {
 
 	public function username() {
 		return 'username';
+	}
+
+	public function login(Request $request) {
+		if (Assistant::whereUsername($request->input($this->username()))->exists()) {
+			$this->traitLogin($request);
+		} else {
+			return redirect()->intended($this->redirectPath());
+		}
 	}
 }
