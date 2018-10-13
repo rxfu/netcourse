@@ -18,7 +18,7 @@ class HomeController extends Controller {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->middleware('auth');
+		$this->middleware('auth')->except('getAssistantForm', 'postAddAssistant');
 	}
 
 	/**
@@ -30,7 +30,7 @@ class HomeController extends Controller {
 		if (Auth::user()->username === 'admin') {
 			$courses = Course::orderBy('id')->get();
 		} else {
-			$courses = Course::whereUserId(Auth::user()->id)->get();
+			$courses = Course::whereAssistantId(Auth::user()->id)->get();
 		}
 
 		return view('home', compact('courses'));
@@ -83,9 +83,14 @@ class HomeController extends Controller {
 	}
 
 	public function getAssistantForm() {
+		if (Auth::check()) {
+			$assistant = Auth::user();
+		} else {
+			$assistant = null;
+		}
 		$departments = Department::orderBy('id')->get();
 
-		return view('assistant', compact('departments'));
+		return view('assistant', compact('departments', 'assistant'));
 	}
 
 	public function postAddAssistant(Request $request) {

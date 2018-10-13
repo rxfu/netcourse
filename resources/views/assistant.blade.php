@@ -21,13 +21,13 @@
                         <div class="form-group row">
                             <label for="id" class="col-md-2 col-form-label text-right">工号</label>
                             <div class="col-md-10">
-                                <input type="text" id="id" name="id" class="form-control" placeholder="工号" required autofocus>
+                                <input type="text" id="id" name="id" class="form-control" placeholder="工号"{{ is_null($assistant) ? '' : 'value=' . $assistant->id . '' }} required autofocus>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-md-2 col-form-label text-right">姓名</label>
                             <div class="col-md-10">
-                                <input type="text" id="name" name="name" class="form-control" placeholder="姓名" required>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="姓名"{{ is_null($assistant) ? '' : 'value=' . $assistant->name . '' }} required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -36,7 +36,7 @@
                                 <select name="department_id" id="department_id" class="form-control" required>
                                     <option disabled value="">请选择</option>
                                         @foreach ($departments as $department)
-                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            <option value="{{ $department->id }}"{{ is_null($assistant) ? '' : ($department->id === $assistant->department_id ? ' selected' : '') }}>{{ $department->name }}</option>
                                         @endforeach
                                 </select>
                             </div>
@@ -44,13 +44,13 @@
                         <div class="form-group row">
                             <label for="major" class="col-md-2 col-form-label text-right">专业</label>
                             <div class="col-md-10">
-                                <input type="text" id="major" name="major" class="form-control" placeholder="专业">
+                                <input type="text" id="major" name="major" class="form-control" placeholder="专业"{{ is_null($assistant) ? '' : 'value=' . $assistant->major . '' }}>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="phone" class="col-md-2 col-form-label text-right">联系电话</label>
                             <div class="col-md-10">
-                                <input type="text" id="phone" name="phone" class="form-control" placeholder="联系电话" required>
+                                <input type="text" id="phone" name="phone" class="form-control" placeholder="联系电话"{{ is_null($assistant) ? '' : 'value=' . $assistant->phone . '' }} required>
                             </div>
                         </div>
                         <div class="form-group row">
