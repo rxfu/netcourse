@@ -124,19 +124,18 @@ class HomeController extends Controller {
 			}
 
 			$request->session()->flash('status', $message);
-			session(['id' => $request->input('id')]);
 
 			return redirect('/courses');
 		}
 
-		return abort(500);
+		return abort(405);
 	}
 
 	public function getCourses() {
-		$exists = Assistant::whereId(session('id'))->exists();
+		$exists = Assistant::whereId(Auth::user()->id)->exists();
 
 		if ($exists) {
-			$assistant = Assistant::findOrFail(session('id'));
+			$assistant = Assistant::findOrFail(Auth::user()->id);
 
 			$exists = Course::whereAssistantId($assistant->id)->exists();
 			if (!$exists) {
@@ -151,13 +150,13 @@ class HomeController extends Controller {
 
 	public function patchUpdateCourses(Request $request) {
 		if ($request->isMethod('patch')) {
-			$exists = Course::whereAssistantId(session('id'))->exists();
+			$exists = Course::whereAssistantId(Auth::user()->id)->exists();
 
 			if (!$exists) {
 				foreach ($request->input('id') as $id) {
 					$course               = Course::findOrFail($id);
 					$course->is_used      = true;
-					$course->assistant_id = session('id');
+					$course->assistant_id = Auth::user()->id;
 					$course->save();
 				}
 
@@ -174,6 +173,6 @@ class HomeController extends Controller {
 			return back();
 		}
 
-		return abort(500);
+		return abort(405);
 	}
 }

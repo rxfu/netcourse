@@ -65,16 +65,16 @@
 @push('scripts')
 <script>
 $(function() {
-    $('input').click(function() {
+    $('input[type="checkbox"]').click(function() {
         var status = false;
 
-        if ($('input:checked').length >= 3) {
+        if ($('input[type="checkbox"]:checked').length >= 3) {
             status = true;
         } else {
             status = false;
         }
 
-        $('input').not(':checked').prop('disabled', status);
+        $('input[type="checkbox"]').not(':checked').prop('disabled', status);
     })
 })
 </script>

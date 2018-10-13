@@ -8,5 +8,5 @@ class Student extends Model {
 
 	protected $connection = 'pgsql';
 
-	protected $table = 't_xs_zxs';
+	protected $table = 'v_xk_xsxx';
 }
