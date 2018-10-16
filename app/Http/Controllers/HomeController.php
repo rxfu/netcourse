@@ -165,7 +165,7 @@ class HomeController extends Controller {
 
 			} else {
 				$status  = false;
-				$message = '申请失败';
+				$message = '申请失败，你已经选过课了';
 			}
 
 			$request->session()->flash('status', $message);
