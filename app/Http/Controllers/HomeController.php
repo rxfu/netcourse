@@ -38,7 +38,7 @@ class HomeController extends Controller {
 
 	public function student($course) {
 		$course   = $course;
-		$students = Score::whereCourseId($course)->get();
+		$students = Score::whereCourseId($course)->orderBy('card_id')->get();
 
 		return view('student', compact('students', 'course'));
 	}

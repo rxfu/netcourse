@@ -16,7 +16,7 @@ class CheckCourse {
 	 */
 	public function handle($request, Closure $next) {
 		if ($request->user()->username !== 'admin') {
-			if (!Course::whereUserId($request->user()->id)->whereId($request->course)->exists()) {
+			if (!Course::whereAssistantId($request->user()->id)->whereId($request->course)->exists()) {
 				return redirect('home');
 			}
 		}
