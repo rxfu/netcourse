@@ -39,9 +39,9 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
+                        <!--li class="nav-item">
                             <a class="nav-link" href="{{ url('/apply') }}">申请</a>
-                        </li>
+                        </li-->
 
                         <!-- Authentication Links -->
                         @guest
@@ -49,9 +49,9 @@
                                 <a class="nav-link" href="{{ route('login') }}">登录</a>
                             </li>
                         @else
-                            <li class="nav-item">
+                            <!--li class="nav-item">
                                 <a class="nav-link" href="{{ url('/courses') }}">课程列表</a>
-                            </li>
+                            </li-->
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/') }}">登分</a>
                             </li>

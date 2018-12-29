@@ -27,7 +27,7 @@ class LoginController extends Controller {
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/apply';
+	protected $redirectTo = '/home';
 
 	/**
 	 * Create a new controller instance.
@@ -90,6 +90,6 @@ class LoginController extends Controller {
 		$this->clearLoginAttempts($request);
 
 		return $this->authenticated($request, $this->guard()->user())
-		?: redirect('/apply');
+		?: redirect('/home');
 	}
 }
