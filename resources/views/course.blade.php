@@ -28,6 +28,8 @@
                                     <th scope="col">课程名称</th>
                                     <th scope="col">班级名称</th>
                                     <th scope="col">学生人数</th>
+                                    <th scope="col">QQ群号</th>
+                                    <th scope="col">备注</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +45,12 @@
                                         <td>{{ $course->name }}</td>
                                         <td>{{ $course->class }}</td>
                                         <td>{{ $course->stucount }}</td>
+                                        <td>
+                                            <input type="text" name="qqun" placeholder="QQ群号">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="memo" placeholder="备注">
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

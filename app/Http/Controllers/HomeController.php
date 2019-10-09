@@ -157,6 +157,8 @@ class HomeController extends Controller {
 					$course               = Course::findOrFail($id);
 					$course->is_used      = true;
 					$course->assistant_id = Auth::user()->id;
+					$course->qqun         = $request->input('qqun');
+					$course->memo         = $request->input('memo');
 					$course->save();
 				}
 
