@@ -150,6 +150,10 @@ class HomeController extends Controller {
 
 	public function patchUpdateCourses(Request $request) {
 		if ($request->isMethod('patch')) {
+			$this->validate($request, [
+				'qqun[]' => 'required|numeric',
+			]);
+
 			$exists = Course::whereAssistantId(Auth::user()->id)->exists();
 
 			if (!$exists) {

@@ -16,7 +16,8 @@ return view('index');
 })->where('path', '(.*)');
  */
 Route::get('/', function () {
-	return redirect('home');
+	// return redirect('home');
+	return redirect('/courses');
 });
 
 Auth::routes();

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header text-center bg-primary text-white">
                     <h3 class="md-3 font-weight-normal">{{ $assistant->name }}助教申请课程信息</h3>
@@ -27,7 +27,6 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">课程名称</th>
                                     <th scope="col">班级名称</th>
-                                    <th scope="col">学生人数</th>
                                     <th scope="col">QQ群号</th>
                                     <th scope="col">备注</th>
                                 </tr>
@@ -44,20 +43,25 @@
                                         <td><i>{{ $course->id }}</i></td>
                                         <td>{{ $course->name }}</td>
                                         <td>{{ $course->class }}</td>
-                                        <td>{{ $course->stucount }}</td>
                                         <td>
-                                            <input type="text" name="qqun" placeholder="QQ群号">
+                                            <input type="text" name="qqun[]" placeholder="QQ群号（必填项）" class="form-control{{ $errors->has('qqun[]') ? ' is-invalid' : '' }}" disabled value="132165">
+
+                                            @if ($errors->has('qqun[]'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('qqun[]') }}</strong>
+                                                </span>
+                                            @endif
                                         </td>
                                         <td>
-                                            <input type="text" name="memo" placeholder="备注">
+                                            <input type="text" name="memo[]" placeholder="备注" class="form-control" disabled>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="5">
-                                        <button type="submit" class="btn btn-block btn-primary">提交</button>
+                                    <td colspan="6" align="center">
+                                        <button type="submit" class="btn btn-lg btn-primary">提交</button>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -83,7 +87,21 @@ $(function() {
         }
 
         $('input[type="checkbox"]').not(':checked').prop('disabled', status);
-    })
+
+            if ($(this).is(':checked')) {
+                alert($(this).parent().next('td').find(':text').prop('tagName'));
+                $(this).parent().next('td').find(':text').prop('disabled', false);
+            } else {
+                $(this).parent().next('td').find(':text').prop('disabled', true);
+            }
+    });
+    $('input[type="checkbox"]').each(function() {
+        if ($(this).is(':checked') == true) {
+            $(this).parent().next('td').find(':text').prop('disabled', false);
+        } else {
+            $(this).parent().next('td').find(':text').prop('disabled', true);
+        }
+    });
 })
 </script>
 @endpush
