@@ -94,13 +94,6 @@ $(function() {
                 $(this).parent().siblings('td:gt(2)').find(':text').prop('disabled', true);
             }
     });
-    /*$('input[type="checkbox"]').each(function() {
-        if ($(this).is(':checked') == true) {
-            $(this).parent().next('td').find(':text').prop('disabled', false);
-        } else {
-            $(this).parent().next('td').find(':text').prop('disabled', true);
-        }
-    });*/
 })
 </script>
 @endpush
