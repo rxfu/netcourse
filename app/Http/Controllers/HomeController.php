@@ -151,18 +151,23 @@ class HomeController extends Controller {
 	public function patchUpdateCourses(Request $request) {
 		if ($request->isMethod('patch')) {
 			$this->validate($request, [
-				'qqun[]' => 'required|numeric',
+				'qqun[]' => 'required_with:id[]|numeric',
+				'id[]' => 'required_with:qqun[]',
 			]);
 
 			$exists = Course::whereAssistantId(Auth::user()->id)->exists();
 
 			if (!$exists) {
-				foreach ($request->input('id') as $id) {
+				$ids = $request->input('id');
+				$qquns = $request->input('qqun');
+				$memos = $request->input('memo');
+
+				foreach ($ids as $key => $id) {
 					$course               = Course::findOrFail($id);
 					$course->is_used      = true;
 					$course->assistant_id = Auth::user()->id;
-					$course->qqun         = $request->input('qqun');
-					$course->memo         = $request->input('memo');
+					$course->qqun         = $qquns[$key];
+					$course->memo         = $memos[$key];
 					$course->save();
 				}
 
