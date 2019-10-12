@@ -144,7 +144,7 @@ class HomeController extends Controller {
 				$courses = Course::whereAssistantId($assistant->id)->get();
 			}
 
-			return view('course', compact('assistant', 'courses'));
+			return view('course', compact('assistant', 'courses', 'exists'));
 		}
 	}
 

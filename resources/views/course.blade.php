@@ -58,13 +58,15 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="6" align="center">
-                                        <button type="submit" class="btn btn-lg btn-primary">提交</button>
-                                    </td>
-                                </tr>
-                            </tfoot>
+                            @unless ($exists)
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6" align="center">
+                                            <button type="submit" class="btn btn-lg btn-primary">提交</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            @endunless
                         </table>
                     </form>
                 </div>
