@@ -32,10 +32,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($courses as $course)
+                                @foreach ($courses as $key => $course)
                                     <tr>
                                         <td>
-                                            <input type="checkbox" name="id[]" value="{{ $course->id }}"
+                                            <input type="checkbox" name="id[{{ $key }}]" value="{{ $course->id }}"
                                             @if ($course->is_used)
                                                 checked disabled
                                             @endif>
@@ -44,16 +44,16 @@
                                         <td>{{ $course->name }}</td>
                                         <td>{{ $course->class }}</td>
                                         <td>
-                                            <input type="text" name="qqun[]" placeholder="QQ群号（必填项）" class="form-control{{ $errors->has('qqun[]') ? ' is-invalid' : '' }}" value="{{ $course->qqun }}" disabled>
+                                            <input type="text" name="qqun[{{ $key }}]" placeholder="QQ群号（必填项）" class="form-control{{ $errors->has('qqun.' . $key) ? ' is-invalid' : '' }}" value="{{ $course->qqun }}" disabled>
 
-                                            @if ($errors->has('qqun[]'))
+                                            @if ($errors->has("qqun.$key"))
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('qqun[]') }}</strong>
+                                                    <strong>{{ $errors->first("qqun.$key") }}</strong>
                                                 </span>
                                             @endif
                                         </td>
                                         <td>
-                                            <input type="text" name="memo[]" placeholder="备注" class="form-control" value="{{ $course->memo }}" disabled>
+                                            <input type="text" name="memo[{{ $key }}]" placeholder="备注" class="form-control" value="{{ $course->memo }}" disabled>
                                         </td>
                                     </tr>
                                 @endforeach
