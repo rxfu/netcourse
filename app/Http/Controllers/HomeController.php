@@ -162,17 +162,24 @@ class HomeController extends Controller {
 				$qquns = $request->input('qqun');
 				$memos = $request->input('memo');
 
-				foreach ($ids as $key => $id) {
-					$course               = Course::findOrFail($id);
-					$course->is_used      = true;
-					$course->assistant_id = Auth::user()->id;
-					$course->qqun         = $qquns[$key];
-					$course->memo         = $memos[$key];
-					$course->save();
-				}
+				$exists = Course::whereIsUsed(true)->whereIn('course_id', $ids)->exists();
 
-				$status  = true;
-				$message = '申请成功';
+				if (!$exists) {
+					foreach ($ids as $key => $id) {
+						$course               = Course::findOrFail($id);
+						$course->is_used      = true;
+						$course->assistant_id = Auth::user()->id;
+						$course->qqun         = $qquns[$key];
+						$course->memo         = $memos[$key];
+						$course->save();
+					}
+
+					$status  = true;
+					$message = '申请成功';
+				} else {
+					$status = false;
+					$message = '已有课程被申请，请重新选课';
+				}
 
 			} else {
 				$status  = false;
