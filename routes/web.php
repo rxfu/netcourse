@@ -16,8 +16,11 @@ return view('index');
 })->where('path', '(.*)');
  */
 Route::get('/', function () {
-	return redirect('home');
-	// return redirect('/courses');
+	if (config('setting.score')) {
+		return redirect('home');
+	} else {
+		return redirect('/courses');
+	}
 });
 
 Auth::routes();
@@ -28,6 +31,9 @@ Route::get('/assistant', 'HomeController@getAssistant');
 Route::get('/apply', 'HomeController@getAssistantForm');
 Route::post('/apply', 'HomeController@postAddAssistant');
 Route::patch('/update', 'HomeController@patchUpdateCourses');
+Route::get('/export', 'HomeController@export')->name('export');
+Route::get('/import', 'HomeController@getImportForm')->name('import');
+route::put('/import', 'HomeController@import');
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/password', 'PasswordController@password')->name('password');
