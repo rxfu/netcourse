@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Assistant;
-use App\Course;
-use App\Department;
-use App\Score;
-use App\Student;
 use Auth;
+use App\Score;
+use App\Course;
+use App\Student;
+use App\Assistant;
+use App\Department;
 use Illuminate\Http\Request;
+use App\Exports\ScoresExport;
+use App\Imports\ScoresImport;
+use Maatwebsite\Excel\Facades\Excel;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->middleware('auth')->except('getAssistantForm', 'postAddAssistant');
 	}
 
@@ -26,7 +31,8 @@ class HomeController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index() {
+	public function index()
+	{
 		if (Auth::user()->username === 'admin') {
 			$courses = Course::orderBy('id')->get();
 		} else {
@@ -36,14 +42,16 @@ class HomeController extends Controller {
 		return view('home', compact('courses'));
 	}
 
-	public function student($course) {
+	public function student($course)
+	{
 		$course   = $course;
 		$students = Score::whereCourseId($course)->orderBy('card_id')->get();
 
 		return view('student', compact('students', 'course'));
 	}
 
-	public function score(Request $request) {
+	public function score(Request $request)
+	{
 		if ($request->isMethod('put')) {
 			$request->validate([
 				'score' => 'required|integer|min:0|max:100',
@@ -56,7 +64,8 @@ class HomeController extends Controller {
 		}
 	}
 
-	public function confirm(Request $request) {
+	public function confirm(Request $request)
+	{
 		if ($request->isMethod('post')) {
 			$request->validate([
 				'score' => 'required|integer|min:0|max:100',
@@ -70,7 +79,8 @@ class HomeController extends Controller {
 		return back();
 	}
 
-	public function getAssistant(Request $request) {
+	public function getAssistant(Request $request)
+	{
 		$id = $request->input('id');
 
 		if (Assistant::whereId($id)->exists()) {
@@ -82,7 +92,8 @@ class HomeController extends Controller {
 		}
 	}
 
-	public function getAssistantForm() {
+	public function getAssistantForm()
+	{
 		if (Auth::check()) {
 			$assistant = Auth::user();
 		} else {
@@ -93,7 +104,8 @@ class HomeController extends Controller {
 		return view('assistant', compact('departments', 'assistant'));
 	}
 
-	public function postAddAssistant(Request $request) {
+	public function postAddAssistant(Request $request)
+	{
 		if ($request->isMethod('post')) {
 			$this->validate($request, [
 				'id'            => 'required',
@@ -131,7 +143,8 @@ class HomeController extends Controller {
 		return abort(405);
 	}
 
-	public function getCourses() {
+	public function getCourses()
+	{
 		$exists = Assistant::whereId(Auth::user()->id)->exists();
 
 		if ($exists) {
@@ -148,7 +161,8 @@ class HomeController extends Controller {
 		}
 	}
 
-	public function patchUpdateCourses(Request $request) {
+	public function patchUpdateCourses(Request $request)
+	{
 		if ($request->isMethod('patch')) {
 			foreach ($request->input('qqun') as $key => $value) {
 				$rules['qqun.' . $key] = 'required|numeric';
@@ -162,7 +176,7 @@ class HomeController extends Controller {
 				$qquns = $request->input('qqun');
 				$memos = $request->input('memo');
 
-				$exists = Course::whereIsUsed(true)->whereIn('course_id', $ids)->exists();
+				$exists = Course::whereIsUsed(true)->whereIn('id', $ids)->exists();
 
 				if (!$exists) {
 					foreach ($ids as $key => $id) {
@@ -180,7 +194,6 @@ class HomeController extends Controller {
 					$status = false;
 					$message = '已有课程被申请，请重新选课';
 				}
-
 			} else {
 				$status  = false;
 				$message = '申请失败，你已经选过课了';
@@ -192,5 +205,23 @@ class HomeController extends Controller {
 		}
 
 		return abort(405);
+	}
+
+	public function export()
+	{
+		return Excel::download(new ScoresExport, 'score.xlsx');
+	}
+
+	public function getImportForm()
+	{
+	}
+
+	public function import(Request $request)
+	{
+		Excel::import(new ScoresImport, $request->file('import'));
+		$message = '成绩导入成功';
+
+		$request->session()->flash('status', $message);
+		return back();
 	}
 }
