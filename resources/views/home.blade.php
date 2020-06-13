@@ -39,14 +39,16 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="5" align="center">
-                                    <a href="{{ route('export') }}" title="导出学生名单" class="btn btn-success">导出学生名单</a>
-                                    <a href="{{ route('import') }}" title="导入学生名单" class="btn btn-primary" data-toggle="modal" data-target="#dialog">导入学生名单</a>
-                                </td>
-                            </tr>
-                        </tfoot>
+                        @if (App\Score::whereIn('course_id', $courses->pluck('id'))->whereIsConfirmed(false)->exists())
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" align="center">
+                                        <a href="{{ route('export') }}" title="导出学生名单" class="btn btn-success">导出学生名单</a>
+                                        <a href="{{ route('import') }}" title="导入学生名单" class="btn btn-primary" data-toggle="modal" data-target="#dialog">导入学生名单</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        @endif
                     </table>
                 </div>
             </div>

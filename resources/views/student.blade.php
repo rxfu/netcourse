@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">学生列表</div>
+                <div class="card-header">{{ $students[0]->course->name . $students[0]->course->class }}学生列表</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -44,7 +44,7 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            @if (!$student->is_confirmed && Auth::user()->username !== 'admin')
+                            @if ($students->where('is_confirmed', false)->count() && Auth::user()->username !== 'admin')
                                 <tfoot>
                                     <tr>
                                         <td colspan="4" style="text-align: center">
