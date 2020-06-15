@@ -29,7 +29,7 @@ class ScoresImport implements OnEachRow, WithStartRow
             ->whereId($courseId)
             ->exists();
 
-        if ($exists) {
+        if ($exists && ($score >= 0 && $score <= 100)) {
             Score::whereCourseId($courseId)
                 ->whereCardId($cardId)
                 ->whereIsConfirmed(false)
