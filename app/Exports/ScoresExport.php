@@ -23,7 +23,7 @@ class ScoresExport extends DefaultValueBinder implements FromCollection, WithHea
             $join->on('scores.course_id', 'courses.id')
                 ->where('courses.assistant_id', Auth::id());
         })
-            ->select('course_id', 'class', 'courses.name AS course', 'card_id', 'scores.name', 'score')
+            ->select('course_id', 'courses.name AS course', 'class', 'card_id', 'scores.name', 'score')
             ->orderBy('card_id')
             ->get();
     }
