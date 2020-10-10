@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'score' => true,
+    'score' => false,
 ];
